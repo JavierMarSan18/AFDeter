@@ -36,11 +36,15 @@ public class Automata {
         List<Estado> estados = new ArrayList<>();
         do {
             estados.add(ingresarNuevoEstado());
-        }while (!(existeEstadoInicial(estados) && existeEstadoFinal(estados)) && ingresarNuevoEstado_Mensaje());
-//        realizarPrueba(estados);
-        imprimirTablaDeTransiciones(estados);
-    }
+        }while (ingresarNuevoEstado_Mensaje());
 
+        if (!(existeEstadoInicial(estados) && existeEstadoFinal(estados))){
+            System.out.println("No existe estado INICIAL y/o FINAL");
+            start();
+        }
+
+        ingresarPalabra(estados);
+    }
     private Estado ingresarNuevoEstado() {
         Estado e = new Estado();
         System.out.println("-----------------------------");
@@ -81,7 +85,19 @@ public class Automata {
         return t;
     }
 
-    private void realizarPrueba(List<Estado> estados) {
+    private  boolean existeEstadoFinal(List<Estado> estados) {
+        return estados.stream().anyMatch(Estado::isEFinal);
+    }
+
+    private  boolean existeEstadoInicial(List<Estado> estados) {
+        return estados.stream().anyMatch(Estado::isEInicial);
+    }
+
+    private  Optional<Estado> obtenerEstadoInicial(List<Estado> estados) {
+        return estados.stream().filter(Estado::isEInicial).findFirst();
+    }
+
+    public void ingresarPalabra(List<Estado> estados) {
         String palabra;
         do {
             System.out.println("-------------------");
@@ -89,7 +105,10 @@ public class Automata {
             System.out.println("-------------------");
             palabra = scanner.nextLine();
 
-            if(isValida(estados, palabra)){
+            System.out.println("\n\n");
+            imprimirTablaDeTransiciones(estados);
+
+            if(esValida(estados, palabra)){
                 System.out.println("La palabra '"+palabra+"' es válida");
             }else {
                 System.out.println("La palabra '"+palabra+"' NO es válida");
@@ -98,19 +117,22 @@ public class Automata {
         start();
     }
 
-    private boolean isValida(List<Estado> estados, String p) {
+    private  Optional<Estado> obtenerSiguienteEstado(List<Estado> estados, Estado eActual, String t) {
+        return estados
+                .stream()
+                .filter(e ->  e.getNombre().equals(eActual.getSalidas().get(t)))
+                .findFirst();
+    }
+
+    public boolean esValida(List<Estado> estados, String p) {
         Optional<Estado> estado = obtenerEstadoInicial(estados);
         List<String> pList = convertirAListaDeCaracteres(p);
         boolean esValida = false;
         int pLongitud = pList.size();
 
-
         AtomicInteger i = new AtomicInteger(0);
 
         while (pLongitud >= i.get()){
-            System.out.println(i.get()+":"+estado.get().getNombre()+":"+estado.get().isEFinal());
-            System.out.println(pLongitud+":"+i.get());
-
             if (pLongitud > i.get()){
                 if (estado.get().getSalidas().containsKey(pList.get(i.get()))){
                     estado = obtenerSiguienteEstado(estados, estado.get() , pList.get(i.get()));
@@ -123,7 +145,6 @@ public class Automata {
             }
             i.incrementAndGet();
         }
-        imprimirTablaDeTransiciones(estados);
         return esValida;
     }
 
@@ -143,22 +164,7 @@ public class Automata {
         System.out.println("=====================");
     }
 
-    private  Optional<Estado> obtenerEstadoInicial(List<Estado> estados) {
-        return estados.stream().filter(Estado::isEInicial).findFirst();
-    }
-
-    private  Optional<Estado> obtenerSiguienteEstado(List<Estado> estados, Estado eActual, String t) {
-        return estados
-                .stream()
-                .filter(e ->  e.getNombre().equals(eActual.getSalidas().get(t)))
-                .findFirst();
-    }
-
-    private  List<String> recorrerPalabra(List<String> p, Estado e) {
-        return new ArrayList<>();
-    }
-
-    private  boolean ingresarNuevoEstado_Mensaje() {
+    private boolean ingresarNuevoEstado_Mensaje() {
         System.out.println("¿Desea ingresar un nuevo ESTADO? Sí(Y) No(N)");
         return scanner.nextLine().equalsIgnoreCase("Y");
     }
@@ -171,14 +177,6 @@ public class Automata {
     private  boolean ingresarNuevaPalabra_Mensaje() {
         System.out.println("¿Desea ingresar una nueva palabra? Sí(Y) No(N)");
         return scanner.nextLine().equalsIgnoreCase("Y");
-    }
-
-    private  boolean existeEstadoFinal(List<Estado> estados) {
-        return estados.stream().anyMatch(Estado::isEFinal);
-    }
-
-    private  boolean existeEstadoInicial(List<Estado> estados) {
-        return estados.stream().anyMatch(Estado::isEInicial);
     }
 
     private  List<String> convertirAListaDeCaracteres(String s) {

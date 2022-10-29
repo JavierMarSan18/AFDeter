@@ -16,12 +16,10 @@ public class Estado {
     private String nombre;
     private boolean eInicial;
     private boolean eFinal;
-    private List<String> entradas;
     private Map<String, String> salidas;
 
 
     public Estado() {
-        this.entradas = new ArrayList<>();
         this.salidas = new HashMap<>();
     }
 
@@ -29,16 +27,7 @@ public class Estado {
         this.nombre = nombre;
         this.eInicial = eInicial;
         this.eFinal = eFinal;
-        this.entradas = new ArrayList<>();
         this.salidas = new HashMap<>();
-    }
-
-    public void agregarEntrada(String e){
-        entradas.add(e);
-    }
-
-    public void eliminarEntrada(String e){
-        entradas.remove(e);
     }
 
     public void agregarSalida(String sq, String se){
@@ -46,10 +35,6 @@ public class Estado {
     }
 
     public void agregarSalida(Transicion t){
-        salidas.put(t.getValor(), t.getValor());
-    }
-
-    public void eliminarSalida(String sq){
-        salidas.remove(sq);
+        salidas.put(t.getValor(), t.getDestino());
     }
 }
