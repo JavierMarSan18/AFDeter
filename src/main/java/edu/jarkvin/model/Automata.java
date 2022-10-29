@@ -39,7 +39,9 @@ public class Automata {
         }while (ingresarNuevoEstado_Mensaje());
 
         if (!(existeEstadoInicial(estados) && existeEstadoFinal(estados))){
-            System.out.println("No existe estado INICIAL y/o FINAL");
+            System.out.println("---------------------------------------");
+            System.out.println("|| No existe estado INICIAL y/o FINAL||");
+            System.out.println("---------------------------------------");
             start();
         }
 
@@ -62,9 +64,9 @@ public class Automata {
         System.out.println("-----------------------------");
         System.out.print(".:");
         e.setEFinal(scanner.nextLine().equalsIgnoreCase("Y"));
-        do {
-            e.agregarSalida(ingresarNuevaTransicion());
-        }while (ingresarNuevaTransicion_Mensaje());
+        while (ingresarNuevaTransicion_Mensaje()){
+            e.agregarTransicion(ingresarNuevaTransicion());
+        }
         return e;
     }
 
@@ -120,30 +122,32 @@ public class Automata {
     private  Optional<Estado> obtenerSiguienteEstado(List<Estado> estados, Estado eActual, String t) {
         return estados
                 .stream()
-                .filter(e ->  e.getNombre().equals(eActual.getSalidas().get(t)))
+                .filter(e -> e.getNombre().equals(eActual.getTransiciones().get(t)))
                 .findFirst();
     }
 
     public boolean esValida(List<Estado> estados, String p) {
         Optional<Estado> estado = obtenerEstadoInicial(estados);
-        List<String> pList = convertirAListaDeCaracteres(p);
         boolean esValida = false;
-        int pLongitud = pList.size();
 
-        AtomicInteger i = new AtomicInteger(0);
+        if(estado.isPresent() && estado.get().getTransiciones().size() > 0){
+            List<String> pList = convertirAListaDeCaracteres(p);
+            int pLongitud = pList.size();
+            AtomicInteger i = new AtomicInteger(0);
 
-        while (pLongitud >= i.get()){
-            if (pLongitud > i.get()){
-                if (estado.get().getSalidas().containsKey(pList.get(i.get()))){
-                    estado = obtenerSiguienteEstado(estados, estado.get() , pList.get(i.get()));
+            while (pLongitud >= i.get()){
+                if (pLongitud > i.get()){
+                   if (estado.isPresent() && estado.get().getTransiciones().containsKey(pList.get(i.get()))){
+                        estado = obtenerSiguienteEstado(estados, estado.get() , pList.get(i.get()));
+                    }
                 }
-            }
 
-            if (pLongitud == i.get() && estado.get().isEFinal()){
-                esValida = true;
-                break;
+                if (pLongitud == i.get() && estado.isPresent() && estado.get().isEFinal()){
+                    esValida = true;
+                    break;
+                }
+                i.incrementAndGet();
             }
-            i.incrementAndGet();
         }
         return esValida;
     }
@@ -156,7 +160,7 @@ public class Automata {
         });
         System.out.println("=====================");
         estados.forEach(e -> {
-            e.getSalidas().forEach((k,v) -> {
+            e.getTransiciones().forEach((k,v) -> {
                 System.out.println(e.getNombre()+"--"+k+"-->"+v);
 
             });

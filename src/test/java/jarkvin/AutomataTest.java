@@ -18,13 +18,13 @@ public class AutomataTest {
         estados = new ArrayList<>();
 
         Estado q0 = new Estado("q0", true, false);
-        q0.agregarSalida("a", "q1");
+        q0.agregarTransicion("a", "q1");
 
         Estado q1 = new Estado("q1", false, false);
-        q1.agregarSalida("a", "q2");
+        q1.agregarTransicion("a", "q2");
 
         Estado q2 = new Estado("q2", false, true);
-        q2.agregarSalida("a", "q1");
+        q2.agregarTransicion("a", "q1");
 
         estados.add(q0);
         estados.add(q1);
