@@ -1,4 +1,4 @@
-package edu.jarkvin.model.v1;
+package jarkvin.model.v1;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

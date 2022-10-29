@@ -1,4 +1,4 @@
-package edu.jarkvin.model.v2;
+package jarkvin.model.v2;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -18,7 +18,6 @@ public class Estado {
     private boolean eFinal;
     private List<String> entradas;
     private Map<String, String> salidas;
-
 
 
     public Estado() {
@@ -44,6 +43,10 @@ public class Estado {
 
     public void agregarSalida(String sq, String se){
         salidas.put(sq, se);
+    }
+
+    public void agregarSalida(Transicion t){
+        salidas.put(t.getValor(), t.getValor());
     }
 
     public void eliminarSalida(String sq){

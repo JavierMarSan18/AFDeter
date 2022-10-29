@@ -1,6 +1,6 @@
 package edu.jarkvin;
 
-import edu.jarkvin.model.v2.Estado;
+import edu.jarkvin.model.Estado;
 
 import java.util.ArrayList;
 import java.util.List;

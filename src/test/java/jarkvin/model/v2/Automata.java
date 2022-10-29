@@ -1,4 +1,4 @@
-package edu.jarkvin.model.v1;
+package jarkvin.model.v2;
 
 import lombok.Data;
 
