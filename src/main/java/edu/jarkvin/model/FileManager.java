@@ -1,26 +1,65 @@
 package edu.jarkvin.model;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import com.google.gson.Gson;
 
-public class Writer {
-    private FileWriter archivo = null;
-    private PrintWriter escritor = null;
+import java.io.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
-    public Writer() throws IOException {
-        try{
-            archivo = new FileWriter("src/main/resources/txtFiles/automatas.txt");
-            escritor = new PrintWriter(archivo);
+public class FileManager{
+    private static final String PATH = "src/main/resources/files/";
+    private File file = null;
+    private Automata a = null;
+    private FileReader fr = null;
+    private BufferedReader br = null;
+    private Gson gson = new Gson();
+
+    public FileManager(){
+    }
+
+    public void save(Automata a) {
+        try {
+            file = new File(PATH+a.getNombre()+".txt");
+            ThreadFileWriter afw = new ThreadFileWriter(a,file);
+            afw.start();
         }catch (Exception e){
             e.printStackTrace();
-        }finally {
-            assert archivo != null;
-            archivo.close();
         }
     }
 
-    public void write(Automata a){
-        escritor.
+    public List<String> readAllFiles(){
+        file = new File(PATH);
+        return Arrays.stream(Objects.requireNonNull(file.list())).toList();
+    }
+
+    public Optional<Automata> readFile(String fileName){
+        Optional<Automata> o = Optional.empty();
+        file = new File(PATH+fileName+".txt");
+        if (file.exists()){
+            try{
+                StringBuilder json = new StringBuilder();
+                fr = new FileReader(file);
+                br = new BufferedReader(fr);
+
+                String str;
+                while ((str=br.readLine()) != null){
+                    json.append(str);
+                }
+
+                if (json.toString().length() > 0){
+                    o = Optional.of(jsonToObject(json.toString()));
+                }
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return o;
+    }
+
+    private Automata jsonToObject(String json){
+        return gson.fromJson(json, Automata.class);
     }
 }

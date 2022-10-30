@@ -1,6 +1,6 @@
 package jarkvin;
 
-import edu.jarkvin.model.Automata;
+import edu.jarkvin.Main;
 import edu.jarkvin.model.Estado;
 import org.junit.Assert;
 import org.junit.Before;
@@ -8,13 +8,10 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 public class AutomataTest {
-
-    private Automata automata;
     private List<Estado> estados;
 
     @Before
     public void before(){
-        automata = new Automata();
         estados = new ArrayList<>();
 
         Estado q0 = new Estado("q0", true, false);
@@ -34,12 +31,12 @@ public class AutomataTest {
     @Test
     public void esValida_True_Test(){
         String palabra = "aaaa";
-        Assert.assertTrue(automata.esValida(estados, palabra));
+        Assert.assertTrue(Main.esValida(estados, palabra));
     }
 
     @Test
     public void esValida_False_Test(){
         String palabra = "aaaaa";
-        Assert.assertFalse(automata.esValida(estados, palabra));
+        Assert.assertFalse(Main.esValida(estados, palabra));
     }
 }
