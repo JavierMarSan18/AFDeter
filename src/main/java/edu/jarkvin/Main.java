@@ -30,6 +30,7 @@ public class Main {
         System.out.print(".: ");
         switch (scanner.nextLine()){
             case "0":
+                System.exit(0);
                 break;
             case "1":
                 crearAutomata();
@@ -115,12 +116,12 @@ public class Main {
         System.out.print(".:");
         e.setNombre(scanner.nextLine());
         System.out.println("-----------------------------");
-        System.out.println("¿Es estado INICIAL? Si(Y) No(N)");
+        System.out.println("Es estado INICIAL? Si(Y) No(N)");
         System.out.println("-----------------------------");
         System.out.print(".:");
         e.setEInicial(scanner.nextLine().equalsIgnoreCase("Y"));
         System.out.println("-----------------------------");
-        System.out.println("¿Es estado FINAL? Si(Y) No(N)");
+        System.out.println("Es estado FINAL? Si(Y) No(N)");
         System.out.println("-----------------------------");
         System.out.print(".:");
         e.setEFinal(scanner.nextLine().equalsIgnoreCase("Y"));
@@ -228,17 +229,17 @@ public class Main {
     }
 
     private static boolean ingresarNuevoEstado_Mensaje() {
-        System.out.println("¿Desea ingresar un nuevo ESTADO? Si(Y) No(N)");
+        System.out.println("Desea ingresar un nuevo ESTADO? Si(Y) No(N)");
         return scanner.nextLine().equalsIgnoreCase("Y");
     }
 
     private static boolean ingresarNuevaTransicion_Mensaje() {
-        System.out.println("¿Desea ingresar una nueva TRANSICION? Si(Y) No(N)");
+        System.out.println("Desea ingresar una nueva TRANSICION? Si(Y) No(N)");
         return scanner.nextLine().equalsIgnoreCase("Y");
     }
 
     private static boolean ingresarNuevaPalabra_Mensaje() {
-        System.out.println("¿Desea ingresar una nueva palabra? Si(Y) No(N)");
+        System.out.println("Desea ingresar una nueva palabra? Si(Y) No(N)");
         return scanner.nextLine().equalsIgnoreCase("Y");
     }
 
