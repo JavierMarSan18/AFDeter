@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class FileManager{
+public class FileManager extends Thread{
     private static final String PATH = "src/main/resources/files/";
     private File file = null;
     private Automata a = null;
@@ -16,7 +16,20 @@ public class FileManager{
     private BufferedReader br = null;
     private Gson gson = new Gson();
 
+    @Override
+    public void run() {
+        file = new File(PATH);
+        if (!file.getParentFile().exists()){
+            file.getParentFile().mkdirs();
+        }
+
+        if (!file.exists()){
+            file.mkdirs();
+        }
+    }
+
     public FileManager(){
+        start();
     }
 
     public void save(Automata a) {

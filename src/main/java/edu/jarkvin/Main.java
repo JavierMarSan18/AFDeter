@@ -167,7 +167,6 @@ public class Main {
             System.out.println("-------------------");
             palabra = scanner.nextLine();
 
-            System.out.println("\n\n");
             imprimirTablaDeTransiciones(estados);
 
             if(esValida(estados, palabra)){
@@ -213,7 +212,7 @@ public class Main {
     }
 
     private static void imprimirTablaDeTransiciones(List<Estado> estados) {
-        System.out.println("=====================");
+        System.out.println("\n\n=====================");
         estados.forEach(e -> {
             if (e.isEInicial()) System.out.println("INICIAL --> "+e.getNombre());
             if (e.isEFinal()) System.out.println("FINAL   --> "+e.getNombre());
