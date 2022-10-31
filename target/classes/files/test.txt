@@ -1,1 +1,0 @@
-{"nombre":"test","estados":[{"nombre":"q0","eInicial":true,"eFinal":false,"transiciones":{"0":"q1"}},{"nombre":"q1","eInicial":false,"eFinal":false,"transiciones":{"0":"q1","1":"q2"}},{"nombre":"q2","eInicial":false,"eFinal":true,"transiciones":{}}]}
