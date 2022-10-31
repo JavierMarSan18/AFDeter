@@ -1,0 +1,6 @@
+
+m
+java:S1450"QRemove the "pw" field and declare it as a local variable in the relevant methods.(ÃâÂ&8Ğ¬»ÖÂ0
+\	java:S899"BDo something with the "boolean" value returned by "createNewFile".(Ğ’Íùÿÿÿÿ
+E
+java:S2093"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ

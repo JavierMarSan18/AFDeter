@@ -1,0 +1,1 @@
+{"nombre":"0(0+1)^+0","estados":[{"nombre":"q0","eInicial":true,"eFinal":false,"transiciones":{"0":"q1"}},{"nombre":"q1","eInicial":false,"eFinal":false,"transiciones":{"0":"q2","1":"q1"}},{"nombre":"q2","eInicial":false,"eFinal":true,"transiciones":{}}]}

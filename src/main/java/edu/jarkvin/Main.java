@@ -89,6 +89,7 @@ public class Main {
             System.out.println("---------------------------------------");
             start();
         }
+
         guardarAutomata(automata);
         ingresarPalabra(automata.getEstados());
     }
@@ -190,22 +191,24 @@ public class Main {
         Optional<Estado> estado = obtenerEstadoInicial(estados);
         boolean esValida = false;
 
-        if(estado.isPresent() && estado.get().getTransiciones().size() > 0){
-            List<String> pList = convertirAListaDeCaracteres(p);
+        List<String> pList = convertirAListaDeCaracteres(p);
+
+        if (estado.isPresent() && estado.get().getTransiciones().containsKey(pList.get(0))){
+
             int pLongitud = pList.size();
             AtomicInteger i = new AtomicInteger(0);
-
             while (pLongitud >= i.get()){
-                if (pLongitud > i.get()){
-                    if (estado.isPresent() && estado.get().getTransiciones().containsKey(pList.get(i.get()))){
-                        estado = obtenerSiguienteEstado(estados, estado.get() , pList.get(i.get()));
-                    }
+                if (pLongitud > i.get() && estado.isPresent() && estado.get().getTransiciones().size() <= 0) break;
+
+                if (pLongitud > i.get() && estado.isPresent() && estado.get().getTransiciones().containsKey(pList.get(i.get()))){
+                    estado = obtenerSiguienteEstado(estados, estado.get() , pList.get(i.get()));
                 }
 
                 if (pLongitud == i.get() && estado.isPresent() && estado.get().isEFinal()){
                     esValida = true;
                     break;
                 }
+
                 i.incrementAndGet();
             }
         }
